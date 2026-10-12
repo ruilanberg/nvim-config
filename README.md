@@ -30,5 +30,7 @@ Requisitos: git, um compilador C (para os parsers do treesitter), `tree-sitter-c
 
 ## Observações
 
-- No Windows, o `compdb.lua` usa os scripts `ue-compdb.ps1` e `cmake-compdb.ps1` de `~/.local/bin`, que não fazem parte deste repositório. No Linux e no Mac ele chama o UBT/CMake direto.
+- `bin/` tem os scripts do Windows; vale pôr a pasta no PATH para usá-los no terminal também:
+  - `ue-compdb.ps1` / `cmake-compdb.ps1`: geram o `compile_commands.json` (o `compdb.lua` chama sozinho no Windows; no Linux e no Mac ele usa o UBT/CMake direto).
+  - `nvim-unity.cmd`: no Unity, em Preferences → Vim → Vim Client Path, aponte para este arquivo (pacote `com.maneuver.nvim`). Abre um nvim por projeto no Windows Terminal e reaproveita a janela.
 - Se a engine do Unreal estiver fora do lugar padrão, defina `UE_ROOT`.

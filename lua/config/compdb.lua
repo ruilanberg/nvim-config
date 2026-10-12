@@ -2,7 +2,7 @@
 -- Detecta quando o banco está desatualizado e roda ue-compdb.ps1 / cmake-compdb.ps1 em segundo plano.
 local M = {}
 
-local bin = vim.fs.normalize("~/.local/bin")
+local bin = vim.fs.joinpath(vim.fn.stdpath("config"), "bin")
 local SKIP = { Intermediate = true, Binaries = true, Saved = true, DerivedDataCache = true, [".git"] = true,
   [".cache"] = true, [".vs"] = true, build = true, ["build-clangd"] = true, out = true, _deps = true, node_modules = true }
 
@@ -162,7 +162,7 @@ local function copy(from, to)
   end
 end
 
---- Comandos que geram o banco. Windows: scripts do ~/.local/bin (carregam o ambiente do MSVC).
+--- Comandos que geram o banco. Windows: scripts de bin/ desta config (carregam o ambiente do MSVC).
 --- Linux/Mac: UBT (Build.sh -mode=GenerateClangDatabase) ou cmake direto.
 ---@return (string[]|function)[]?, string? erro
 local function commands(proj)
