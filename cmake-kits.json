@@ -1,0 +1,12 @@
+[
+  {
+    "name": "MSVC x64 (Ninja)",
+    "generator": "Ninja",
+    "compilers": { "C": "cl", "CXX": "cl" }
+  },
+  {
+    "name": "Clang-cl x64 (Ninja)",
+    "generator": "Ninja",
+    "compilers": { "C": "clang-cl", "CXX": "clang-cl" }
+  }
+]
