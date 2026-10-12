@@ -18,6 +18,7 @@ Requisitos: git, um compilador C (para os parsers do treesitter), `tree-sitter-c
 | Área | Arquivo | Destaques |
 |---|---|---|
 | C# / Unity | `lua/plugins/csharp.lua` | Roslyn LSP (`roslyn.nvim`), prefere o `.sln` gerado pelo Unity |
+| Unity | `lua/plugins/unity.lua` | [unity-nvim](https://github.com/ruilanberg/unity-nvim): o Unity abre arquivos aqui; compilar ao salvar, erros na quickfix, `:Unity play/stop/log` (`<leader>U*`) |
 | C++ / CMake | `lua/plugins/cpp.lua` | clangd ajustado para Unreal, `cmake-tools.nvim` + codelldb (`<leader>m*`) |
 | Unreal | `lua/config/unreal.lua` | `:UnrealBuild [Development\|DebugGame]` (`<leader>cb`), erros na quickfix; Windows, Linux e Mac |
 | Unreal (debug) | `lua/plugins/unreal-debug.lua` | `:UnrealAttach` anexa o codelldb ao editor aberto (só Windows) |
@@ -30,7 +31,6 @@ Requisitos: git, um compilador C (para os parsers do treesitter), `tree-sitter-c
 
 ## Observações
 
-- `bin/` tem os scripts do Windows; vale pôr a pasta no PATH para usá-los no terminal também:
-  - `ue-compdb.ps1` / `cmake-compdb.ps1`: geram o `compile_commands.json` (o `compdb.lua` chama sozinho no Windows; no Linux e no Mac ele usa o UBT/CMake direto).
-  - `nvim-unity.cmd`: no Unity, em Preferences → Vim → Vim Client Path, aponte para este arquivo (pacote `com.maneuver.nvim`). Abre um nvim por projeto no Windows Terminal e reaproveita a janela.
+- `bin/` tem os scripts do Windows `ue-compdb.ps1` / `cmake-compdb.ps1`, que geram o `compile_commands.json` (o `compdb.lua` chama sozinho no Windows; no Linux e no Mac ele usa o UBT/CMake direto). Vale pôr a pasta no PATH para usá-los no terminal também.
+- Unity: instale o pacote `https://github.com/ruilanberg/unity-nvim.git?path=/Packages/com.ruilanberg.unity-nvim#v0.1.0` no projeto e escolha *Neovim* em Preferences → External Tools.
 - Se a engine do Unreal estiver fora do lugar padrão, defina `UE_ROOT`.
