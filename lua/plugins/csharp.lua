@@ -21,10 +21,28 @@ return {
     ---@type RoslynNvimConfig
     opts = {
       -- Unity gera .sln e .slnx (front-child): prefere o .sln, que o Roslyn carrega com os .csproj do Unity
+      -- Sem .sln (Unity 6.3+ só gera .slnx): o .slnx com o nome da pasta (convenção do Unity) e,
+      -- se não houver, o mais recente (sobras antigas, como o Fintech.slnx do front-child, ficam de fora)
       choose_target = function(targets)
-        return vim.iter(targets):find(function(t)
+        local sln = vim.iter(targets):find(function(t)
           return t:match("%.sln$")
-        end) -- nil = deixa o roslyn.nvim escolher
+        end)
+        if sln then
+          return sln
+        end
+        -- "<pasta>/<nome>.slnx" com / ou \ (Windows)
+        local named = vim.iter(targets):find(function(t)
+          local dir, name = t:match("([^/\\]+)[/\\]([^/\\]+)%.[^./\\]+$")
+          return dir ~= nil and dir == name
+        end)
+        if named then
+          return named
+        end
+        local recent = vim.list_slice(targets)
+        table.sort(recent, function(a, b)
+          return vim.fn.getftime(a) > vim.fn.getftime(b)
+        end)
+        return recent[1]
       end,
       -- Projetos Unity têm milhares de arquivos em Library/; o watcher do próprio Roslyn é mais leve no Windows
       filewatching = "roslyn",

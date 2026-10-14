@@ -4,10 +4,12 @@ return {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
       local clangd = opts.servers.clangd or {}
-      -- Windows: clangd do LLVM (winget); Linux/Mac: o do Mason
-      clangd.mason = vim.fn.has("win32") == 0
+      -- Windows: clangd do LLVM (winget); Mac: o da Apple (/usr/bin/clangd), o único que entende os
+      -- módulos da libc++ do Xcode que o UBT usa (o do Mason dá "module 'std_core' is needed"); Linux: o do Mason
+      local mac = vim.fn.has("mac") == 1
+      clangd.mason = vim.fn.has("win32") == 0 and not mac
       clangd.cmd = {
-        "clangd",
+        mac and "/usr/bin/clangd" or "clangd",
         "--background-index",
         "--clang-tidy",
         "--header-insertion=never", -- Unreal tem convenções próprias de include
